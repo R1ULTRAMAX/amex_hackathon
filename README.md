@@ -13,3 +13,35 @@ Given a customer, an offer, and a placement date — predict the **probability o
 
 - Evaluation Metric: **MAP@7 (Mean Average Precision at 7)**
 - Final submission requires predicting **top 7 ranked offers** for each customer per day.
+
+---
+
+## 🛠️ Key Techniques Used
+
+- LightGBM ranking model (`lambdarank` objective)
+- Extensive categorical encoding & feature engineering
+- Session-level aggregation from transactions and events
+- Click-through-rate and offer-level statistics
+- Temporal features from timestamps
+- Merging external data for customer, offer, and impression enrichment
+
+---
+
+## 📊 Data Files Overview
+
+| File Name                | Description                                    |
+|-------------------------|------------------------------------------------|
+| `train_data.parquet`    | Click labels + impressions for training        |
+| `test_data.parquet`     | Test set to predict offer ranks on             |
+| `add_event.parquet`     | Impression/click timestamp logs                |
+| `add_trans.parquet`     | Customer-level transaction history             |
+| `offer_metadata.parquet`| Metadata about each offer                      |
+| `data_dictionary.csv`   | Description of anonymized features             |
+
+---
+
+## 📈 Evaluation Metric
+
+> **MAP@7**: Measures average precision per customer, weighted by the rank of true positive clicks.
+
+This encourages models to push the highest-click-probability offers to the top 7 positions.
